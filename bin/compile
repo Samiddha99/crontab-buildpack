@@ -40,10 +40,10 @@ dpkg -x $CRON_PKG $CRON_PATH
 echo "-----> Setting permissions for cron binaries"
 chmod +x $CRON_BINARIES/*
 
-echo "-----> Moving cron binaries to the right place"
+echo "-----> Moving cron binaries to ${BIN_PATH}"
 mv $CRON_BINARIES/* $BIN_PATH/
 
-echo "-----> Moving cron libs to the right place"
+echo "-----> Moving cron libs to ${LIB_PATH}"
 mv $CRON_LIBS/* $LIB_PATH/
 
 echo "-----> Cleaning up"
