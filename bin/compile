@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+set -e
+                 
+if [ "$STACK" == "cedar-14" ]; then
+  UBUNTU_VERSION="trusty"
+elif [ "$STACK" == "heroku-16" ]; then
+  UBUNTU_VERSION="xenial"
+elif [ "$STACK" == "heroku-18" ]; then
+  UBUNTU_VERSION="bionic"
+else
+  UBUNTU_VERSION="focal"
+fi
+
+CRON_URL="http://archive.ubuntu.com/ubuntu/pool/main/c/cron/cron_3.0pl1-136ubuntu1_amd64.deb"
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+BIN_PATH="$BUILD_DIR/bin/cron"
+TMP_PATH="$BUILD_DIR/tmp"
+LIB_PATH="$BUILD_DIR/vendor/cron/lib"
+
+mkdir -p $CACHE_DIR $BIN_PATH $TMP_PATH $LIB_PATH
+
+CRON_PKG="$CACHE_DIR/cron.deb"
+CRON_PATH="$TMP_PATH/cron"
+CRON_BINARIES="$CRON_PATH/usr/bin"
+CRON_LIBS="$CRON_PATH/lib"
+
+BIN_DIR=$(cd $(dirname $0); pwd)
+
+echo "-----> Downloading cron Debian package from ${CRON_URL}"
+curl -L $CRON_URL -o $CRON_PKG
+
+echo "-----> Unpacking cron Debian package"
+dpkg -x $CRON_PKG $CRON_PATH
+
+echo "-----> Setting permissions for cron binaries"
+chmod +x $CRON_BINARIES/*
+
+echo "-----> Moving cron binaries to the right place"
+mv $CRON_BINARIES/* $BIN_PATH/
+
+echo "-----> Moving cron libs to the right place"
+mv $CRON_LIBS/* $LIB_PATH/
+
+echo "-----> Cleaning up"
+rm -rf $CRON_PATH
