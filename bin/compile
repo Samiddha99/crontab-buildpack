@@ -21,19 +21,14 @@ CACHE_DIR=$2
 CRON_PKG="$CACHE_DIR/cron.deb"
 CRON_PATH="$BUILD_DIR/packages/cron"
 CRON_BINARIES="$WKHTMLTOPDF_PATH/usr/bin"
-CRON_LIBS="$CRON_PATH/lib"
 
-# mkdir -p $WKHTMLTOPDF_PATH
+mkdir -p $WKHTMLTOPDF_PATH
 
-# echo "-----> Downloading cron Debian package from ${CRON_URL}"
-# curl -L $CRON_URL -o $CRON_PKG
+echo "-----> Downloading cron Debian package from ${CRON_URL}"
+curl -L $CRON_URL -o $CRON_PKG
 
-# echo "-----> Unpacking cron Debian package"
-# dpkg -x $CRON_PKG $CRON_PATH
+echo "-----> Unpacking cron Debian package ${CRON_PATH}"
+dpkg -x $CRON_PKG $CRON_PATH
 
-# echo "-----> Setting permissions for cron binaries"
-# chmod +x $CRON_BINARIES/*
-
-apt-get install cron
-
-which corn
+echo "-----> Setting permissions for cron binaries"
+chmod +x $CRON_BINARIES/*
