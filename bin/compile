@@ -27,7 +27,7 @@ mkdir -p $CRON_PATH
 echo "-----> Downloading Cron Debian package from ${CRON_URL}"
 curl -L $CRON_URL -o $CRON_PKG
 
-echo "-----> Unpacking Cron Debian package ${CRON_PATH}"
+echo "-----> Unpacking Cron Debian package to ${CRON_PATH}"
 dpkg -x $CRON_PKG $CRON_PATH
 
 echo "-----> Setting execute permissions for Cron binaries"
