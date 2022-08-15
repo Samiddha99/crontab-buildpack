@@ -20,9 +20,9 @@ CACHE_DIR=$2
 
 CRON_PKG="$CACHE_DIR/cron.deb"
 CRON_PATH="$BUILD_DIR/packages/cron"
-CRON_BINARIES="$WKHTMLTOPDF_PATH/usr/bin"
+CRON_BINARIES="$CRON_PATH/usr/bin"
 
-mkdir -p $WKHTMLTOPDF_PATH
+mkdir -p $CRON_PATH
 
 echo "-----> Downloading cron Debian package from ${CRON_URL}"
 curl -L $CRON_URL -o $CRON_PKG
