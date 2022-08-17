@@ -24,6 +24,8 @@ CRON_BINARIES="$CRON_PATH/usr/bin"
 
 mkdir -p $CRON_PATH
 
+CRONTAB_EXECUTABLE_PATH_VAR="/app/packages/cron/usr/bin/crontab"
+
 echo "-----> Downloading Cron Debian package from ${CRON_URL}"
 curl -L $CRON_URL -o $CRON_PKG
 
@@ -32,3 +34,12 @@ dpkg -x $CRON_PKG $CRON_PATH
 
 echo "-----> Setting execute permissions for Cron binaries"
 chmod +x $CRON_BINARIES/*
+
+
+profile_directory="$BUILD_DIR/.profile.d"
+profile_directory_script="$profile_directory/crontab_buildpack.sh"
+
+mkdir -p $profile_directory
+
+echo "-----> setting config var CRONTAB_EXECUTABLE_PATH='${CRONTAB_EXECUTABLE_PATH_VAR}'"
+echo "export CRONTAB_EXECUTABLE_PATH=${CRONTAB_EXECUTABLE_PATH_VAR}" > $profile_directory_script
